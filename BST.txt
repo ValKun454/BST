@@ -1,0 +1,60 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+struct TreeNode {
+	int data;
+	TreeNode* left;
+	TreeNode* right;
+
+	TreeNode(int val) : data(val), left(nullptr), right(nullptr) {}
+};
+
+void insert(TreeNode*& root, int val) {
+	if (root == nullptr) {
+		root = new TreeNode(val);
+		return;
+	}
+
+	if (val < root->data)
+		insert(root->left, val);
+	else
+		insert(root->right, val);
+}
+
+void inorderTraversal(TreeNode* root) {
+	if (root == nullptr)
+		return;
+
+	inorderTraversal(root->left);
+	cout << root->data << " ";
+	inorderTraversal(root->right);
+}
+
+int main() {
+	setlocale(LC_ALL, "PL");
+	srand(time(nullptr));
+
+	TreeNode* root = nullptr;
+
+	int n;
+	cout << "Wprowadź liczbę elementów: ";
+	cin >> n;
+
+	cout << "Liczby losowe: ";
+	for (int i = 0; i < n; ++i) {
+		int num = rand() % 100 + 1;
+		cout << num << " ";
+		insert(root, num);
+	}
+	cout << endl;
+
+	cout << "Posortowana tablica: ";
+	inorderTraversal(root);
+	cout << endl;
+
+	return 0;
+}
+
